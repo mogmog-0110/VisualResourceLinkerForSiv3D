@@ -1,0 +1,10 @@
+[Title]
+text = "リソースリンカー"
+pos = [ 20, 20 ]
+
+[ListArea]
+pos = [ 20, 80 ]
+size = [ 740, 680 ]
+
+[BackgroundColor]
+color = "#f0f8ff"
