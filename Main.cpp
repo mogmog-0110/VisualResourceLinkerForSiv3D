@@ -1,5 +1,7 @@
 ﻿# include "stdafx.h"
 # include "Model.hpp"
+# include "UIView.hpp"
+# include "Controller.hpp"
 
 # ifdef _DEBUG
 # include "Tester.hpp"
@@ -7,14 +9,19 @@
 
 void Main()
 {
-#ifdef _DEBUG
+	Addon::Register<DearImGuiAddon>(U"ImGui");
 	vrl::Model model;
-	model.loadFile(U"Resource.rc");
-	vrl::Tester::ShowModelItems(model);
+	vrl::UIView view{ model };
+	vrl::Controller controller{ model };
 
+#ifdef _DEBUG
+	//model.loadFile(U"Resource.rc");
+	//vrl::Tester::ShowModelItems(model);
 #endif
 	while (System::Update())
 	{
+		const auto interaction = view.draw();
+		controller.handleInput(interaction);
 	}
 }
 
