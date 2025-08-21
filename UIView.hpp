@@ -34,6 +34,9 @@ namespace vrl
 		[[nodiscard]]
 		Interaction drawResourceTable(ResourceCategory category);
 
+		void drawAboutPopupContent() const;
+
 		Model& m_model;
+		bool m_isAboutPopupRequested = false;
 	};
 };
