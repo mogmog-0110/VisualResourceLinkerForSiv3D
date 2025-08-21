@@ -1,0 +1,2 @@
+# VisualResourceLinkerForSiv3D
+Siv3Dのリソースの埋め込みを補助するツール。
