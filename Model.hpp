@@ -42,6 +42,9 @@ namespace vrl
 		const Optional<FilePath>& getFilePath() const;
 
 	private:
+		bool writeItemsToFile(const FilePath& filePath, const Array<ResourceItem>& items) const;
+
+
 		Optional<FilePath> m_filePath; // ファイルパス
 		Array<ResourceItem> m_items; // リソースアイテムの配列
 		Array<ResourceItem> m_backupItems; // バックアップ

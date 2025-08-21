@@ -12,6 +12,29 @@ namespace vrl
 
 	void Controller::handleInput(const UIView::Interaction& interaction)
 	{
+		// ImGuiの入出力情報にアクセス
+		ImGuiIO& io = ImGui::GetIO();
+
+		// Ctrlキーが押されている状態で
+		if (io.KeyCtrl)
+		{
+			// Oキー
+			if (ImGui::IsKeyPressed(ImGuiKey_O))
+			{
+				openFile();
+			}
+			// Sキー
+			if (ImGui::IsKeyPressed(ImGuiKey_S))
+			{
+				m_model.saveFile();
+			}
+			// Rキー
+			if (ImGui::IsKeyPressed(ImGuiKey_R))
+			{
+				m_model.revertChanges();
+			}
+		}
+
 		if (interaction.exitClicked)
 		{
 			exitRequested = true;
@@ -33,6 +56,11 @@ namespace vrl
 
 		if (interaction.registButtonClicked)
 		{
+			if (not m_model.getFilePath())
+			{
+				System::MessageBoxOK(U"Error", U"Please open a Resource.rc file before registering new resources.", MessageBoxStyle::Error);
+				return;
+			}
 			openResource();
 		}
 

@@ -15,42 +15,32 @@ namespace vrl
 
 		// 念のためバックアップ
 		m_backupItems = m_items;
+		const DateTime now = DateTime::Now();
+		const String timestamp = now.format(U"yyyy-MM-dd_HH-mm-ss");
+		const FilePath backupFilePath = path + U"." + timestamp + U".bak";
+		writeItemsToFile(backupFilePath, m_backupItems);
 	}
 
 	void Model::saveFile() const
 	{
-		// まだファイルを読み込んでいない
 		if (not m_filePath)
 		{
 			System::MessageBoxOK(U"Save Error", U"No file path has been specified for saving.", MessageBoxStyle::Warning);
-			Print << U"Save Error";
 			return;
 		}
 
-		// ファイルに書き出し
-		TextWriter writer{ *m_filePath };
-
-
-		if (not writer)
+		if (writeItemsToFile(*m_filePath, m_items))
 		{
-			const String message = U"Failed t save the file. \nPlease check if the file is read-only\nor currently in use by another program.";
-			System::MessageBoxOK(U"Save Error", message, MessageBoxStyle::Error);
-			return;
+			// 成功
+			const String message = U"File saved successfully to:\n\n" + *m_filePath;
+			System::MessageBoxOK(U"Save Successful", message, MessageBoxStyle::Info);
 		}
-
-		// Siv3Dに必須のヘッダーやアイコン定義
-		writer.writeln(U"# include <Siv3D/Windows/Resource.hpp>");
-		writer.writeln(U"");
-		writer.writeln(U"DefineResource(100, ICON, icon.ico)");
-
-		// カテゴリごとに、セクションを分けてリソースを書き出す
-		WriteResourcesInCategory(writer, m_items, ResourceCategory::Required, U"Siv3D Engine Resources (DO NOT REMOVE)");
-		WriteResourcesInCategory(writer, m_items, ResourceCategory::Optional, U"Siv3D Engine Optional Resources");
-		WriteResourcesInCategory(writer, m_items, ResourceCategory::Custom, U"Siv3D App Resources");
-
-
-		const String message = U"File saved successfully to:\n\n" + *m_filePath;
-		System::MessageBoxOK(U"Save Successful", message, MessageBoxStyle::Info);
+		else
+		{
+			// 失敗
+			const String message = U"Failed to save the file.\nPlease check if the file is read-only\nor currently in use by another program.";
+			System::MessageBoxOK(U"Save Error", message, MessageBoxStyle::Error);
+		}
 	}
 
 	void Model::revertChanges()
@@ -125,6 +115,27 @@ namespace vrl
 	const Optional<FilePath>& Model::getFilePath() const
 	{
 		return m_filePath;
+	}
+
+	bool Model::writeItemsToFile(const FilePath& filePath, const Array<ResourceItem>& items) const
+	{
+		TextWriter writer{ filePath };
+		if (not writer)
+		{
+			// ファイルが開けなかった場合は false
+			return false;
+		}
+
+		writer.writeln(U"# include <Siv3D/Windows/Resource.hpp>");
+		writer.writeln(U"");
+		writer.writeln(U"DefineResource(100, ICON, icon.ico)");
+
+		// カテゴリごとに書き出す
+		WriteResourcesInCategory(writer, items, ResourceCategory::Required, U"Siv3D Engine Resources (DO NOT REMOVE)");
+		WriteResourcesInCategory(writer, items, ResourceCategory::Optional, U"Siv3D Engine Optional Resources");
+		WriteResourcesInCategory(writer, items, ResourceCategory::Custom, U"Siv3D App Resources");
+
+		return true; // 保存に成功したら trueを返す
 	}
 
 	// リソースファイルをSiv3Dが正しく読み込めるようにするための補助関数

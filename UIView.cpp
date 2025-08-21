@@ -13,15 +13,18 @@ namespace vrl
 	{
 		Interaction interaction;
 
+		// Modelにファイルパスが設定されているかをチェック
+		const bool isFileLoaded = m_model.getFilePath().has_value();
+
 		// メニューバーの描画
-		const auto menuInteraction = drawMainMenuBar();
+		const auto menuInteraction = drawMainMenuBar(isFileLoaded);
 		interaction.exitClicked = menuInteraction.exitClicked;
 		interaction.openFileClicked = menuInteraction.openFileClicked;
 		interaction.saveFileClicked = menuInteraction.saveFileClicked;
 		interaction.revertClicked = menuInteraction.revertClicked;
 
 		// メインウィンドウの描画
-		const auto windowInteraction = drawMainWindow();
+		const auto windowInteraction = drawMainWindow(isFileLoaded);
 		interaction.registButtonClicked = windowInteraction.registButtonClicked;
 		interaction.toggledItemIndex = windowInteraction.toggledItemIndex;
 		interaction.erasedItemIndex = windowInteraction.erasedItemIndex;
@@ -29,29 +32,29 @@ namespace vrl
 		return interaction;
 	}
 
-	UIView::Interaction UIView::drawMainMenuBar()
+	UIView::Interaction UIView::drawMainMenuBar(bool isFileLoaded)
 	{
 		Interaction interaction;
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("Exit"))
+				if (ImGui::MenuItem("Exit", "Esc"))
 				{
 					interaction.exitClicked = true; // Exitボタンがクリック
 				}
-				if (ImGui::MenuItem("Open"))
+				if (ImGui::MenuItem("Open", "Ctrl+O"))
 				{
 					interaction.openFileClicked = true; // Openボタンがクリック
 
 				}
 
-				if (ImGui::MenuItem("Save"))
+				if (ImGui::MenuItem("Save", "Ctrl+S", false, isFileLoaded))
 				{
 					interaction.saveFileClicked = true; // Saveボタンがクリック
 				}
 
-				if (ImGui::MenuItem("Revert"))
+				if (ImGui::MenuItem("Revert", "Ctrl+R", false, isFileLoaded))
 				{
 					interaction.revertClicked = true; // Revertボタンをクリック
 				}
@@ -62,7 +65,7 @@ namespace vrl
 		return interaction;
 	}
 
-	UIView::Interaction UIView::drawMainWindow()
+	UIView::Interaction UIView::drawMainWindow(bool isFileLoaded)
 	{
 		Interaction interaction;
 

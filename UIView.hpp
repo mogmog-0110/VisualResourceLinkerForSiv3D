@@ -26,10 +26,10 @@ namespace vrl
 		Interaction draw();
 	private:
 		[[nodiscard]]
-		Interaction drawMainMenuBar();
+		Interaction drawMainMenuBar(bool isFileLoaded);
 
 		[[nodiscard]]
-		Interaction drawMainWindow();
+		Interaction drawMainWindow(bool isFileLoaded);
 
 		[[nodiscard]]
 		Interaction drawResourceTable(ResourceCategory category);
