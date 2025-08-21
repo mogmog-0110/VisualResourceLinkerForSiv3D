@@ -1,15 +1,12 @@
-# include <Siv3D/Windows/Resource.hpp>
+﻿# include <Siv3D/Windows/Resource.hpp>
+
+DefineResource(100, ICON, icon.ico)
 
 //////////////////////////////////////////////////////
 //
 //	Siv3D Engine Resources (DO NOT REMOVE)
 //
 //////////////////////////////////////////////////////
-DefineResource(100, ICON, icon.ico)
-
-//
-//	Shaders
-//
 Resource(engine/shader/d3d11/sprite.vs)
 Resource(engine/shader/d3d11/shape.ps)
 Resource(engine/shader/d3d11/square_dot.ps)
@@ -68,15 +65,7 @@ Resource(engine/shader/glsl/apply_srgb_curve.frag)
 Resource(engine/shader/glsl/quad_warp.vert)
 Resource(engine/shader/glsl/quad_warp.frag)
 Resource(engine/shader/glsl/sky.frag)
-
-//
-//	Fonts
-//
 Resource(engine/font/min/siv3d-min.woff)
-
-//
-//	Box-shadow Textures
-//
 Resource(engine/texture/box-shadow/256.png)
 Resource(engine/texture/box-shadow/128.png)
 Resource(engine/texture/box-shadow/64.png)
@@ -86,13 +75,9 @@ Resource(engine/texture/box-shadow/8.png)
 
 //////////////////////////////////////////////////////
 //
-//	Siv3D Engine Optional Resources (Can be removed if not required)
+//	Siv3D Engine Optional Resources
 //
 //////////////////////////////////////////////////////
-
-//
-//	Fonts
-//
 Resource(engine/font/mplus/mplus-1p-thin.ttf.zstdcmp)
 Resource(engine/font/mplus/mplus-1p-light.ttf.zstdcmp)
 Resource(engine/font/mplus/mplus-1p-regular.ttf.zstdcmp)
@@ -102,47 +87,15 @@ Resource(engine/font/mplus/mplus-1p-heavy.ttf.zstdcmp)
 Resource(engine/font/mplus/mplus-1p-black.ttf.zstdcmp)
 Resource(engine/font/noto-cjk/NotoSansCJK-Regular.ttc.zstdcmp)
 //Resource(engine/font/noto-cjk/NotoSansJP-Regular.otf.zstdcmp)
-
-//
-//	Emoji Fonts
-//
-Resource(engine/font/noto-emoji/NotoColorEmoji.ttf.zstdcmp)
-Resource(engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp)
-
-//
-//	Icons
-//
-Resource(engine/font/fontawesome/fontawesome-brands.otf.zstdcmp)
-Resource(engine/font/fontawesome/fontawesome-solid.otf.zstdcmp)
-Resource(engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp)
-
-//
-//	Sound Font
-//
-Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
+//Resource(engine/font/noto-emoji/NotoColorEmoji.ttf.zstdcmp)
+//Resource(engine/font/noto-emoji/NotoEmoji-Regular.ttf.zstdcmp)
+//Resource(engine/font/fontawesome/fontawesome-brands.otf.zstdcmp)
+//Resource(engine/font/fontawesome/fontawesome-solid.otf.zstdcmp)
+//Resource(engine/font/materialdesignicons/materialdesignicons-webfont.ttf.zstdcmp)
+//Resource(engine/soundfont/GMGSx.sf2.zstdcmp)
 
 //////////////////////////////////////////////////////
 //
-//	Siv3D App Resources (Your application resources here)
+//	Siv3D App Resources
 //
 //////////////////////////////////////////////////////
-
-
-
-/* examples 
-
-	//
-	// Define your resource path inside `Resource()` macro.
-	// No double quotation marks and white spaces may appear.
-	//
-	Resource(example/siv3d-kun.png)		// ok
-	Resource(example/windmill.png)		// ok
-	Resource(assets/a b c.txt)			// error: contains white spaces
-	Resource("example/windmill.png")	// error: contains double quotation marks
-
-	//
-	// If your file contains a white space, define the identifier without using Resource() macro.
-	//
-	MYIDENTIFIER_1 FILE "assets/a b c.txt"
-	MYIDENTIFIER_2 FILE "level 1/map.dat"
-*/
