@@ -205,6 +205,7 @@ namespace vrl
 
 	void UIView::drawAboutPopupContent() const
 	{
+		//ここめっちゃ文字化けするけどなんでなんだ。。。
 		ImGui::Text("Visual Resource Linker for Siv3D");
 		ImGui::Text("Developer: Shiggy");
 		ImGui::Separator();
