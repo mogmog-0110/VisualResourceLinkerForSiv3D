@@ -10,6 +10,14 @@
 void Main()
 {
 	Addon::Register<DearImGuiAddon>(U"ImGui");
+
+	// 見た目の設定(何がいいのだろうか)
+	// モダンなダークテーマ
+	//ImGui::StyleColorsDark();
+
+	// 明るいライトテーマ
+	ImGui::StyleColorsLight();
+
 	vrl::Model model;
 	vrl::UIView view{ model };
 	vrl::Controller controller{ model };
@@ -22,6 +30,16 @@ void Main()
 	{
 		const auto interaction = view.draw();
 		controller.handleInput(interaction);
+
+		// ドラッグ&ドロップ処理
+		// ドラッグ＆ドロップの処理
+		if (DragDrop::HasNewFilePaths())
+		{
+			for (const auto& droppedFile : DragDrop::GetDroppedFilePaths())
+			{
+				model.addItem(droppedFile.path);
+			}
+		}
 	}
 }
 

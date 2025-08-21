@@ -17,6 +17,26 @@ namespace vrl
 			openFile();
 		}
 
+		if (interaction.saveFileClicked)
+		{
+			m_model.saveFile();
+		}
+
+		if (interaction.registButtonClicked)
+		{
+			openResource();
+		}
+
+		if (interaction.toggledItemIndex)
+		{
+			m_model.toggleItemEnabled(*interaction.toggledItemIndex);
+		}
+
+		if (interaction.erasedItemIndex)
+		{
+			m_model.removeItem(*interaction.erasedItemIndex);
+		}
+
 	}
 
 	void Controller::openFile()
@@ -34,6 +54,19 @@ namespace vrl
 		if (const auto path = Dialog::OpenFile(filters))
 		{
 			m_model.loadFile(*path);
+		}
+	}
+
+	void Controller::openResource()
+	{
+		// 複数ファイルを選択できるダイアログを開く
+		if (const auto paths = Dialog::OpenFiles({ FileFilter::AllFiles() }))
+		{
+			// 選ばれたすべてのファイルについて、Modelに登録を依頼します
+			for (const auto& path : paths)
+			{
+				m_model.addItem(path);
+			}
 		}
 	}
 };

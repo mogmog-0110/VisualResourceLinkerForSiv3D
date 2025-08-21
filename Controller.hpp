@@ -12,6 +12,7 @@ namespace vrl
 		void handleInput(const UIView::Interaction& interaction);
 	private:
 		void openFile();
+		void openResource();
 		Model& m_model;
 	};
 };

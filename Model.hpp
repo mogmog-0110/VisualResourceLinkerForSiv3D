@@ -19,10 +19,16 @@ namespace vrl
 		int32 lineNumber; // リソースが定義されている行番号
 	};
 
+	void WriteResourcesInCategory(TextWriter& writer, const Array<ResourceItem>& items, ResourceCategory category, const String& sectionComment);
+
 	class Model
 	{
 	public:
 		void loadFile(const FilePath& filePath);
+		void saveFile() const;
+		void addItem(const FilePath& path);
+		void toggleItemEnabled(size_t index);
+		void removeItem(size_t index);
 
 		[[nodiscard]]
 		const Array<ResourceItem>& getResourceItems() const;
