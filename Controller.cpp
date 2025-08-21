@@ -12,6 +12,10 @@ namespace vrl
 
 	void Controller::handleInput(const UIView::Interaction& interaction)
 	{
+		if (interaction.exitClicked)
+		{
+			exitRequested = true;
+		}
 		if (interaction.openFileClicked)
 		{
 			openFile();
@@ -20,6 +24,11 @@ namespace vrl
 		if (interaction.saveFileClicked)
 		{
 			m_model.saveFile();
+		}
+
+		if (interaction.revertClicked)
+		{
+			m_model.revertChanges();
 		}
 
 		if (interaction.registButtonClicked)

@@ -22,17 +22,32 @@ void Main()
 	vrl::UIView view{ model };
 	vrl::Controller controller{ model };
 
+	System::SetTerminationTriggers(UserAction::CloseButtonClicked); // こちらの操作で終了できるように
+
 #ifdef _DEBUG
 	//model.loadFile(U"Resource.rc");
 	//vrl::Tester::ShowModelItems(model);
 #endif
 	while (System::Update())
 	{
+		if (controller.exitRequested || KeyEscape.down())
+		{
+			controller.exitRequested = false;
+
+			const String title = U"Confirm Exit";
+			const String message = U"Are you sure you want to exit?";
+
+			// 確認メッセージボックスを表示
+			if (System::MessageBoxYesNo(title, message) == MessageBoxResult::Yes)
+			{
+				System::Exit();
+			}
+		}
+
 		const auto interaction = view.draw();
 		controller.handleInput(interaction);
 
 		// ドラッグ&ドロップ処理
-		// ドラッグ＆ドロップの処理
 		if (DragDrop::HasNewFilePaths())
 		{
 			for (const auto& droppedFile : DragDrop::GetDroppedFilePaths())

@@ -10,6 +10,8 @@ namespace vrl
 	public:
 		explicit Controller(Model& model);
 		void handleInput(const UIView::Interaction& interaction);
+
+		bool exitRequested = false;
 	private:
 		void openFile();
 		void openResource();

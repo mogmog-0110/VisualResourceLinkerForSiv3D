@@ -27,8 +27,13 @@ namespace vrl
 		void loadFile(const FilePath& filePath);
 		void saveFile() const;
 		void addItem(const FilePath& path);
+		void revertChanges();
+
 		void toggleItemEnabled(size_t index);
 		void removeItem(size_t index);
+
+		// TODO: Undo,Redo機能。コマンドパターンを使わなきゃなのでちょっと面倒
+
 
 		[[nodiscard]]
 		const Array<ResourceItem>& getResourceItems() const;
@@ -39,5 +44,6 @@ namespace vrl
 	private:
 		Optional<FilePath> m_filePath; // ファイルパス
 		Array<ResourceItem> m_items; // リソースアイテムの配列
+		Array<ResourceItem> m_backupItems; // バックアップ
 	};
 }

@@ -12,6 +12,9 @@ namespace vrl
 		// ファイルの読み込み
 		const vrl::ResourceParser parser;
 		m_items = parser.parse(path);
+
+		// 念のためバックアップ
+		m_backupItems = m_items;
 	}
 
 	void Model::saveFile() const
@@ -48,6 +51,21 @@ namespace vrl
 
 		const String message = U"File saved successfully to:\n\n" + *m_filePath;
 		System::MessageBoxOK(U"Save Successful", message, MessageBoxStyle::Info);
+	}
+
+	void Model::revertChanges()
+	{
+		// 現在のリストを、バックアップした時の状態に戻す
+		const String title = U"Confirm Revert";
+		const String message = U"Are you sure you want to discard all current changes?\n\n"
+			U"This action cannot be undone.";
+
+		// Yes/Noのメッセージボックスを表示
+		if (System::MessageBoxYesNo(title, message) == MessageBoxResult::Yes)
+		{
+			// YesならRevert
+			m_items = m_backupItems;
+		}
 	}
 
 	void Model::addItem(const FilePath& path)

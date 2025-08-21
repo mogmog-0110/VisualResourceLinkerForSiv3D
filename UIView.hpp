@@ -14,6 +14,9 @@ namespace vrl
 			bool openFileClicked = false;
 			bool saveFileClicked = false;
 			bool registButtonClicked = false;
+			bool revertClicked = false;
+			bool exitClicked = false;
+
 			Optional<size_t> toggledItemIndex;
 			Optional<size_t> erasedItemIndex;
 		};

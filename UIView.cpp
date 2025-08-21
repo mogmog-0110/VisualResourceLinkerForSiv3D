@@ -15,8 +15,10 @@ namespace vrl
 
 		// メニューバーの描画
 		const auto menuInteraction = drawMainMenuBar();
+		interaction.exitClicked = menuInteraction.exitClicked;
 		interaction.openFileClicked = menuInteraction.openFileClicked;
 		interaction.saveFileClicked = menuInteraction.saveFileClicked;
+		interaction.revertClicked = menuInteraction.revertClicked;
 
 		// メインウィンドウの描画
 		const auto windowInteraction = drawMainWindow();
@@ -34,6 +36,10 @@ namespace vrl
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("Exit"))
+				{
+					interaction.exitClicked = true; // Exitボタンがクリック
+				}
 				if (ImGui::MenuItem("Open"))
 				{
 					interaction.openFileClicked = true; // Openボタンがクリック
@@ -43,6 +49,11 @@ namespace vrl
 				if (ImGui::MenuItem("Save"))
 				{
 					interaction.saveFileClicked = true; // Saveボタンがクリック
+				}
+
+				if (ImGui::MenuItem("Revert"))
+				{
+					interaction.revertClicked = true; // Revertボタンをクリック
 				}
 				ImGui::EndMenu();
 			}
@@ -130,10 +141,14 @@ namespace vrl
 
 				// チェックボックス
 				ImGui::TableNextColumn();
-				bool checked = item.isEnabled;
-				if (ImGui::Checkbox((U"##enabled"_s + ToString(i)).toUTF8().c_str(), &checked)) // ImGUIはUTF-8しか理解できないっぽい
+
+				if (item.category != ResourceCategory::Required)
 				{
-					interaction.toggledItemIndex = i;
+					bool checked = item.isEnabled;
+					if (ImGui::Checkbox((U"##enabled"_s + ToString(i)).toUTF8().c_str(), &checked)) // ImGUIはUTF-8しか理解できないっぽい
+					{
+						interaction.toggledItemIndex = i;
+					}
 				}
 
 				// パス
@@ -142,9 +157,12 @@ namespace vrl
 
 				// 削除
 				ImGui::TableNextColumn();
-				if (ImGui::Button((U"Erase##"_s + ToString(i)).toUTF8().c_str()))
+				if (item.category != ResourceCategory::Required)
 				{
-					interaction.erasedItemIndex = i;
+					if (ImGui::Button((U"Erase##"_s + ToString(i)).toUTF8().c_str()))
+					{
+						interaction.erasedItemIndex = i;
+					}
 				}
 			}
 
